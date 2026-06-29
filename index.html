@@ -1,20 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eiraaj’s Celebration</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') center/cover no-repeat;
+}
+
+/* INTRO SCREEN */
+#intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 999;
+    animation: fadeOut 2.5s ease forwards;
+    animation-delay: 2.5s;
+}
+
+#intro h1 {
+    color: #d4af37;
+    font-size: 28px;
+    letter-spacing: 2px;
+}
+
+@keyframes fadeOut {
+    to {opacity: 0; visibility: hidden;}
+}
+
+/* MAIN */
+.container {
+    padding: 30px 15px;
+    max-width: 700px;
+    margin: auto;
+    animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.profile {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #d4af37;
+    object-fit: cover;
+    margin-top: 10px;
+    animation: zoomIn 1.5s ease;
+}
+
+@keyframes zoomIn {
+    from {transform: scale(0.5);}
+    to {transform: scale(1);}
+}
+
+h1 {
+    color: #d4af37;
+    margin-top: 15px;
+}
+
+.card {
+    background: rgba(0,0,0,0.65);
+    padding: 18px;
+    margin-top: 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(212,175,55,0.4);
+}
+
+/* COUNTDOWN */
+.countdown {
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+/* BUTTONS */
+.btn {
+    display: inline-block;
+    margin: 8px;
+    padding: 12px 18px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.rsvp {background:#25D366;color:white;}
+.map {background:#d4af37;color:black;}
+
+.btn:hover {transform: scale(1.05);}
+
+/* SLIDESHOW */
+.slideshow {
+    width: 100%;
+    height: 220px;
+    margin-top: 15px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    transition: 1s ease;
+    border: 1px solid rgba(212,175,55,0.4);
+}
+
+/* QR */
+.qr {
+    margin-top: 10px;
+}
+</style>
+</head>
+
 <body>
+
+<!-- INTRO -->
+<div id="intro">
+    <h1>✨ You're Invited ✨</h1>
+</div>
 
 <div class="container">
 
-<h2>🌿 Welcome to 🌿</h2>
+    <img src="YOUR_PHOTO.jpg" class="profile">
 
-<h1>🦁 Eiraaj's Wild One 🦁</h1>
+    <h1>Eiraaj’s Celebration</h1>
+    <p>An evening of joy, laughter & togetherness</p>
 
-<img src="IMG_3662.PNG" alt="Eiraaj">
+    <!-- COUNTDOWN -->
+    <div class="card">
+        <div class="countdown" id="countdown"></div>
+    </div>
 
-<h2>25 July 2026 • 3:30 PM</h2>
+    <!-- SLIDESHOW -->
+    <div class="slideshow" id="slide"></div>
 
-<a class="button">
-Enter The Jungle 🐵
-</a>
+    <div class="card">
+        📅 25 July 2026<br>
+        ⏰ 3:00 PM onwards<br>
+        📍 Singapore (Update venue)
+    </div>
+
+    <div class="card">
+        <a class="btn rsvp"
+           href="https://wa.me/6583065696?text=Hi%20I%20will%20be%20attending"
+           target="_blank">RSVP WhatsApp</a>
+
+        <a class="btn rsvp"
+           href="https://wa.me/6583064147?text=Hi%20I%20will%20be%20attending"
+           target="_blank">Second Contact</a>
+
+        <br>
+
+        <a class="btn map"
+           href="https://www.google.com/maps"
+           target="_blank">Open Maps</a>
+    </div>
+
+    <!-- QR CODE -->
+    <div class="card qr">
+        <p>Scan to RSVP</p>
+        <img width="120"
+        src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/6583065696">
+    </div>
 
 </div>
+
+<!-- MUSIC -->
+<audio id="music" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1d7b7f5f7.mp3?filename=soft-piano-ambient-110397.mp3">
+</audio>
+
+<script>
+// COUNTDOWN
+const eventDate = new Date("July 25, 2026 15:00:00").getTime();
+
+setInterval(() => {
+    const now = new Date().getTime();
+    const diff = eventDate - now;
+
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const mins = Math.floor((diff%(1000*60*60))/(1000*60));
+
+    document.getElementById("countdown").innerHTML =
+        `⏳ ${days}d ${hours}h ${mins}m to go`;
+}, 1000);
+
+// SLIDESHOW
+const images = [
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+    "https://images.unsplash.com/photo-1529634806980-85c3dd6d7f8b",
+    "https://images.unsplash.com/photo-1500375592092-40eb2168fd21"
+];
+
+let i = 0;
+setInterval(() => {
+    document.getElementById("slide").style.backgroundImage =
+        `url('${images[i]}')`;
+    i = (i + 1) % images.length;
+}, 3000);
+
+// MUSIC autoplay safety
+document.body.addEventListener("click", () => {
+    document.getElementById("music").play();
+});
+</script>
 
 </body>
 </html>
